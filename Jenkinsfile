@@ -18,9 +18,17 @@ pipeline{
                 sh './increment_version.sh'
             }
         }
-        stage("Clean up before creating images") {
+       stage("Clean up before creating images") {
             steps {
-                sh 'ansible-playbook playbook.yml'
+                script {
+                    def previousBuildId = BUILD_ID.toInteger() - 1
+                    sh "docker rmi achrafladhari/gateway:${previousBuildId} --force"
+                    sh "docker rmi achrafladhari/swagger:${previousBuildId} --force"
+                    sh "docker rmi achrafladhari/orders:${previousBuildId} --force"
+                    sh "docker rmi achrafladhari/games:${previousBuildId} --force"
+                    sh "docker rmi achrafladhari/users:${previousBuildId} --force"
+
+                }
             }
         }
         stage ("Building images and containers"){
