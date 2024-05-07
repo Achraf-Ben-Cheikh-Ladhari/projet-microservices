@@ -22,6 +22,7 @@ pipeline{
             steps {
                 script {
                     def previousBuildId = BUILD_ID.toInteger() - 1
+                    sh "docker compose down -v"
                     sh "docker rmi achrafladhari/gateway:${previousBuildId} --force"
                     sh "docker rmi achrafladhari/swagger:${previousBuildId} --force"
                     sh "docker rmi achrafladhari/orders:${previousBuildId} --force"
