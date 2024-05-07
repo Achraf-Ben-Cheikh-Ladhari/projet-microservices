@@ -1,8 +1,4 @@
-ARG VERSION
-
 FROM node:alpine
-
-LABEL version=$VERSION
 
 WORKDIR /gateway
 

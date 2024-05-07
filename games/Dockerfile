@@ -1,8 +1,4 @@
-ARG VERSION
-
 FROM python:3.9-slim
-
-LABEL version=$VERSION
 
 WORKDIR /games
 

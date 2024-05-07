@@ -18,7 +18,11 @@ pipeline{
                 sh './increment_version.sh'
             }
         }
-
+        stage("Clean up before creating images") {
+            steps {
+                sh 'ansible-playbook playbook.yml'
+            }
+        }
         stage ("Building images and containers"){
             steps{
                 sh 'docker compose up -d'
