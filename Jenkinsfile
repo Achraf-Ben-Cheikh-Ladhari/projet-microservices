@@ -9,6 +9,7 @@ pipeline{
                   docker info
                   docker compose version
                   curl --version
+                  ansible --version
                 '''
             }
         }
