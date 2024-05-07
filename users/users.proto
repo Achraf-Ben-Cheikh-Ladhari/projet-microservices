@@ -1,0 +1,73 @@
+syntax = "proto3";
+package user;
+
+message User {
+string id = 1;
+string username=2;
+string nom = 3;
+string prenom = 4;
+string age = 5;
+string password=6;
+}
+
+message GetUserRequest {
+string user_id = 1;
+}
+
+message GetUserResponse {
+User user = 1;
+}
+
+message SearchUsersRequest {
+string query = 1;
+}
+
+message SearchUsersResponse {
+repeated User users = 1;
+}
+
+message AddUserRequest {
+    string username=1;
+    string nom = 2;
+    string prenom = 3;
+    string age = 4;
+    string password=5;
+}
+
+message AddUserResponse {
+    User user = 1;
+}
+message UpdateUserRequest {
+    string id=1;
+    string nom = 2;
+    string prenom = 3;
+    string age = 4;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+message DeleteUserRequest {
+    string id = 1;
+}
+
+message DeleteUserResponse {
+    string message=2;
+    User user = 1;
+}
+message LoginUserRequest{
+    string username=1;
+    string password=2;
+}
+message LoginUserResponse{
+string token=1;
+}
+
+service UserService {
+rpc GetUser(GetUserRequest) returns (GetUserResponse);
+rpc SearchUsers(SearchUsersRequest) returns (SearchUsersResponse);
+rpc AddUser(AddUserRequest) returns (AddUserResponse);
+rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+rpc UpdateUser(UpdateUserRequest)returns(UpdateUserResponse);
+rpc LoginUser (LoginUserRequest) returns (LoginUserResponse);
+}

@@ -1,0 +1,42 @@
+syntax = "proto3";
+package order;
+
+message Order {
+string id = 1;
+string idUser = 2;
+repeated string idGames = 3;
+string total = 4;
+}
+
+message GetOrderRequest {
+string order_id = 1;
+}
+
+message GetOrderResponse {
+Order order = 1;
+}
+
+message SearchOrdersRequest {
+string query = 1;
+}
+
+message SearchOrdersResponse {
+repeated Order orders = 1;
+}
+
+message AddOrderRequest {
+    string idUser = 1;
+    repeated string idGames = 2;
+    string total = 3;
+}
+
+message AddOrderResponse {
+    Order order = 1;
+}
+
+service OrderService {
+rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+rpc SearchOrders(SearchOrdersRequest) returns (SearchOrdersResponse);
+rpc AddOrder(AddOrderRequest) returns (AddOrderResponse);
+
+}
