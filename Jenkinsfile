@@ -37,5 +37,21 @@ pipeline{
                 sh 'docker compose up -d'
             }
         }
+        stage("Deploy") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                        sh "docker push ${USERNAME}/gateway:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/swagger:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/orders:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/games:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/users:${BUILD_ID}"
+
+                    }
+                }
+            }
+        }
+    
     }
 }
