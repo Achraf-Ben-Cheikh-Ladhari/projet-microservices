@@ -1,12 +1,15 @@
 services:
   gateway-service:
+    image: achrafladhari/gateway
+    container_name: gateway
     build: "./gateway"
     ports:
       - '3000:3000'
     network_mode: host
 
-
   orders-service:
+    image: achrafladhari/orders
+    container_name: orders
     build: "./orders"
     ports:
       - '50053:50053'
@@ -14,8 +17,9 @@ services:
       - gateway-service
     network_mode: host
 
-
   users-service:
+    image: achrafladhari/users
+    container_name: users
     build: "./users"
     ports:
       - '50051:50051'
@@ -23,8 +27,9 @@ services:
       - gateway-service
     network_mode: host
 
-
   games-service:
+    image: achrafladhari/games
+    container_name: games
     build: "./games"
     ports:
       - '50052:50052'
@@ -32,13 +37,12 @@ services:
       - gateway-service
     network_mode: host
 
-
   swagger-service:
+    image: achrafladhari/swagger
+    container_name: swagger
     build: "./swagger"
     ports:
       - '4000:4000'
     depends_on:
       - gateway-service
     network_mode: host
-
-

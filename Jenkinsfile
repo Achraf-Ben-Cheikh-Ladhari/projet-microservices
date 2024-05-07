@@ -18,5 +18,10 @@ pipeline{
                 sh 'ansible-playbook playbook.yml'
             }
         }
+        stage ("Building images and containers"){
+            steps{
+                sh 'docker compose up -d'
+            }
+        }
     }
 }
