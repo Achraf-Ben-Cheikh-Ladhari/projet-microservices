@@ -6,7 +6,7 @@ const cors = require('cors');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const bcrypt=require('bcrypt');
-// Load proto files for users and TV shows
+
 const userProtoPath = "users.proto";
 const gameProtoPath = "games.proto";
 const orderProtoPath = "orders.proto";

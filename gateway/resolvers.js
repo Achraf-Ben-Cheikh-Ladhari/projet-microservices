@@ -68,7 +68,7 @@ const resolvers = {
                 salt = bcrypt.genSaltSync(10);
                 password = bcrypt.hashSync(password, salt);
                 userData = {
-                    username:username,
+                    username: username,
                     nom: nom,
                     prenom: prenom,
                     age: age,
@@ -96,16 +96,16 @@ const resolvers = {
                     topic: 'user_topic',
                     messages: [{ value: JSON.stringify({ action: 'loginUser', userData }) }]
                 });
-        
+
                 await producer.disconnect();
-        
+
                 return ('Login user request sent to Kafka');
             } catch (error) {
                 console.error('Error publishing message to Kafka:', error);
                 throw new Error('Failed to login user');
             }
-        },        
-        
+        },
+
         updateUser: async (_, { id, nom, prenom, age }) => {
             try {
                 await producer.connect();
@@ -136,15 +136,14 @@ const resolvers = {
             }
         },
         addGame: async (_, { title, description, type, prix }) => {
-            // Effectuer un appel gRPC au microservice de films
             try {
                 await producer.connect();
-                gameData = {
+                const gameData = {
                     title: title,
                     description: description,
                     type: type,
                     prix: prix
-                }
+                };
                 await producer.send({
                     topic: 'game_topic',
                     messages: [{ value: JSON.stringify({ action: 'addGame', gameData }) }]
@@ -155,17 +154,6 @@ const resolvers = {
                 console.error('Error publishing message to Kafka:', error);
                 throw new Error('Failed to add game');
             }
-            /*const client = new gameProto.GameService('localhost:50052',
-                grpc.credentials.createInsecure());
-            return new Promise((resolve, reject) => {
-                client.addGame({ title: title, description: description, type: type, prix: prix }, (err, response) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(response.game);
-                    }
-                });
-            });*/
         },
         game: async (_, { id }) => {
             try {
@@ -180,17 +168,6 @@ const resolvers = {
                 console.error('Error publishing message to Kafka:', error);
                 throw new Error('Failed to query game');
             }
-            /* const client = new gameProto.GameService('localhost:50052',
-                 grpc.credentials.createInsecure());
-             return new Promise((resolve, reject) => {
-                 client.getGame({ game_id: id }, (err, response) => {
-                     if (err) {
-                         reject(err);
-                     } else {
-                         resolve(response.game);
-                     }
-                 });
-             });*/
         },
         games: async () => {
             try {
@@ -203,21 +180,10 @@ const resolvers = {
                 return ('Searching for all games');
             } catch (error) {
                 console.error('Error publishing message to Kafka:', error);
-                throw new Error('Failed to Searching games');
+                throw new Error('Failed to search games');
             }
-            // Effectuer un appel gRPC au microservice de séries TV
-            /* const client = new gameProto.GameService('localhost:50052',
-                 grpc.credentials.createInsecure());
-             return new Promise((resolve, reject) => {
-                 client.searchGames({}, (err, response) => {
-                     if (err) {
-                         reject(err);
-                     } else {
-                         resolve(response.games);
-                     }
-                 });
-             });*/
         },
+
         addOrder: async (_, { idUser, idGames, total }) => {
             try {
                 await producer.connect();
