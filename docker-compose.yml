@@ -2,9 +2,8 @@ services:
   gateway-service:
     build:
       context: ./gateway
-      args:
-        - VERSION=${VERSION}
-    image: achrafladhari/gateway:${VERSION}
+
+    image: achrafladhari/gateway:${BUILD_ID}
     container_name: gateway
     ports:
       - '3000:3000'
@@ -13,9 +12,8 @@ services:
   orders-service:
     build:
       context: ./orders
-      args:
-        - VERSION=${VERSION}
-    image: achrafladhari/orders:${VERSION}
+
+    image: achrafladhari/orders:${BUILD_ID}
     container_name: orders
     ports:
       - '50053:50053'
@@ -26,9 +24,8 @@ services:
   users-service:
     build:
       context: ./users
-      args:
-        - VERSION=${VERSION}
-    image: achrafladhari/users:${VERSION}
+
+    image: achrafladhari/users:${BUILD_ID}
     container_name: users
     ports:
       - '50051:50051'
@@ -39,9 +36,8 @@ services:
   games-service:
     build:
       context: ./games
-      args:
-        - VERSION=${VERSION}
-    image: achrafladhari/games:${VERSION}
+
+    image: achrafladhari/games:${BUILD_ID}
     container_name: games
     ports:
       - '50052:50052'
@@ -52,9 +48,8 @@ services:
   swagger-service:
     build:
       context: ./swagger
-      args:
-        - VERSION=${VERSION}
-    image: achrafladhari/swagger:${VERSION}
+
+    image: achrafladhari/swagger:${BUILD_ID}
     container_name: swagger
     ports:
       - '4000:4000'
