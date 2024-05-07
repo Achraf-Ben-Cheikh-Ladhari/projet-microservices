@@ -3,25 +3,25 @@
   hosts : localhost
   tasks:
   - name : Stop Containers and remove them
-    command : sudo docker compose down -v
+    command : docker compose down -v
     ignore_errors: yes
   
   - name : Remove gateway image
-    command : sudo docker rmi projet-microservices-gateway-service --force
+    command : docker rmi projet-microservices-gateway-service --force
     ignore_errors: yes
     
   - name : Remove swagger image
-    command : sudo docker rmi projet-microservices-swagger-service --force
+    command : docker rmi projet-microservices-swagger-service --force
     ignore_errors: yes
   
   - name : Remove orders service image
-    command : sudo docker rmi projet-microservices-orders-service --force
+    command : docker rmi projet-microservices-orders-service --force
     ignore_errors: yes
 
   - name : Remove games service image
-    command : sudo docker rmi projet-microservices-games-service --force
+    command : docker rmi projet-microservices-games-service --force
     ignore_errors: yes
 
   - name : Remove users service image
-    command : sudo docker rmi projet-microservices-users-service --force
+    command : docker rmi projet-microservices-users-service --force
     ignore_errors: yes
