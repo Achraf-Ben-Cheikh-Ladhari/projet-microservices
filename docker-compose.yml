@@ -1,16 +1,22 @@
 services:
   gateway-service:
-    image: achrafladhari/gateway
+    build:
+      context: ./gateway
+      args:
+        - VERSION=${VERSION}
+    image: achrafladhari/gateway:${VERSION}
     container_name: gateway
-    build: "./gateway"
     ports:
       - '3000:3000'
     network_mode: host
 
   orders-service:
-    image: achrafladhari/orders
+    build:
+      context: ./orders
+      args:
+        - VERSION=${VERSION}
+    image: achrafladhari/orders:${VERSION}
     container_name: orders
-    build: "./orders"
     ports:
       - '50053:50053'
     depends_on:
@@ -18,9 +24,12 @@ services:
     network_mode: host
 
   users-service:
-    image: achrafladhari/users
+    build:
+      context: ./users
+      args:
+        - VERSION=${VERSION}
+    image: achrafladhari/users:${VERSION}
     container_name: users
-    build: "./users"
     ports:
       - '50051:50051'
     depends_on:
@@ -28,9 +37,12 @@ services:
     network_mode: host
 
   games-service:
-    image: achrafladhari/games
+    build:
+      context: ./games
+      args:
+        - VERSION=${VERSION}
+    image: achrafladhari/games:${VERSION}
     container_name: games
-    build: "./games"
     ports:
       - '50052:50052'
     depends_on:
@@ -38,9 +50,12 @@ services:
     network_mode: host
 
   swagger-service:
-    image: achrafladhari/swagger
+    build:
+      context: ./swagger
+      args:
+        - VERSION=${VERSION}
+    image: achrafladhari/swagger:${VERSION}
     container_name: swagger
-    build: "./swagger"
     ports:
       - '4000:4000'
     depends_on:

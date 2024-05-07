@@ -1,4 +1,8 @@
+ARG VERSION
+
 FROM node:alpine
+
+LABEL version=$VERSION
 
 WORKDIR /swagger
 
