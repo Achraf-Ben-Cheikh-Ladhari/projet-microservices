@@ -2,7 +2,7 @@ pipeline{
     agent any
     
     stages{
-        stage("verify tooling"){
+        stage("Verify tooling"){
             steps{
                 sh '''
                   docker version
@@ -11,6 +11,11 @@ pipeline{
                   curl --version
                   ansible --version
                 '''
+            }
+        }
+        stage ("Clean up old images and containers"){
+            steps{
+                sh 'ansible-playbook playbook.yml'
             }
         }
     }
