@@ -15,7 +15,7 @@ pipeline{
         }
          stage("Versioning") {
             steps {
-                sh './increment_version.sh'
+                sh "echo Version: ${BUILD_ID}"
             }
         }
        stage("Clean up before creating images") {
