@@ -37,16 +37,6 @@ pipeline{
                 sh 'docker compose up -d'
             }
         }
-        stage ("Logging Containers"){
-            steps{
-                sh 'docker logs gateway'
-                sh 'docker logs swagger'
-                sh 'docker logs users'
-                sh 'docker logs games'
-                sh 'docker logs orders'
-
-            }
-        }
         stage("Deploy") {
             steps {
                 script {
@@ -60,6 +50,15 @@ pipeline{
 
                     }
                 }
+            }
+        }
+        stage ("Logging Containers"){
+            steps{
+                sh 'docker logs gateway'
+                sh 'docker logs swagger'
+                sh 'docker logs users'
+                sh 'docker logs games'
+                sh 'docker logs orders'
             }
         }
         stage ("Emailing"){
