@@ -37,21 +37,7 @@ pipeline{
                 sh 'docker compose up -d'
             }
         }
-        stage("Deploy") {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
-                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-                        sh "docker push ${USERNAME}/gateway:${BUILD_ID}"
-                        sh "docker push ${USERNAME}/swagger:${BUILD_ID}"
-                        sh "docker push ${USERNAME}/orders:${BUILD_ID}"
-                        sh "docker push ${USERNAME}/games:${BUILD_ID}"
-                        sh "docker push ${USERNAME}/users:${BUILD_ID}"
 
-                    }
-                }
-            }
-        }
         stage("Send GraphQL Requests") {
             steps {
                 sh 'curl -X POST -H "Content-Type: application/json" -d \'{"query": "query { users }"}\' http://localhost:3000/graphql'
@@ -66,6 +52,21 @@ pipeline{
                 sh 'docker logs users'
                 sh 'docker logs games'
                 sh 'docker logs orders'
+            }
+        }
+        stage("Deploy") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                        sh "docker push ${USERNAME}/gateway:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/swagger:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/orders:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/games:${BUILD_ID}"
+                        sh "docker push ${USERNAME}/users:${BUILD_ID}"
+
+                    }
+                }
             }
         }
         stage ("Emailing"){
