@@ -1,6 +1,8 @@
 pipeline{
     agent any
-    
+    triggers {
+        pollSCM('* * * * *') 
+    }
     stages{
         stage("Verify tooling"){
             steps{
