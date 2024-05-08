@@ -37,9 +37,11 @@ pipeline{
                 sh 'docker compose up -d'
             }
         }
-
         stage("Send GraphQL Requests") {
             steps {
+                script {
+                    sleep(time: 30, unit: 'SECONDS')
+                }
                 sh 'curl -X POST -H "Content-Type: application/json" -d \'{"query": "query { users }"}\' http://localhost:3000/graphql'
                 sh 'curl -X POST -H "Content-Type: application/json" -d \'{"query": "query { games }"}\' http://localhost:3000/graphql'
                 sh 'curl -X POST -H "Content-Type: application/json" -d \'{"query": "query { orders }"}\' http://localhost:3000/graphql'
