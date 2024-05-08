@@ -387,7 +387,7 @@
           "type": "string"
         },
         "idGames": {
-          "type": "string"
+          "type": "array"
         },
         "total": {
           "type": "string"
