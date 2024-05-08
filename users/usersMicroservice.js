@@ -43,6 +43,7 @@ const runConsumer = async () => {
         await consumer.run({
             eachMessage: async ({ topic, partition, message }) => {
                 const { action, userData } = JSON.parse(message.value.toString());
+                console.log("Logging from kafka! ");
                 if (action === 'addUser') {
                     try {
                         const { username, nom, prenom, age, password } = userData;

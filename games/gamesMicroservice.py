@@ -58,6 +58,7 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
 
         for message in consumer:
             logging.info(message.value['action']) 
+            logging.info('Logging from kafka!')
             if message.value['action'] == 'addGame':
                 try:
                     game_data = message.value['gameData']

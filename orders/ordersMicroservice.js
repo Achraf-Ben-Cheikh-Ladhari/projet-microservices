@@ -42,6 +42,7 @@ const runConsumer = async () => {
         await consumer.run({
             eachMessage: async ({ topic, partition, message }) => {
                 const { action, orderData } = JSON.parse(message.value.toString());
+                console.log("Logging from kafka! ");
                 if (action === 'addOrder') {
                     try {
                         const { idUser, idGames, total } = orderData;
