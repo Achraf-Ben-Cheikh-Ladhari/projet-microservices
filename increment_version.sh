@@ -4,4 +4,4 @@ VERSION=$BUILD_ID
 
 echo "$VERSION" > version.txt
 
-echo "Version : $VERSION"
+echo "Version: $VERSION"
