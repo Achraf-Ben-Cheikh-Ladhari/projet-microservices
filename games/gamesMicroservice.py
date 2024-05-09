@@ -24,6 +24,7 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
     def GetGame(self, request, context):
         game_id = request.game_id
         game = self.games_collection.find_one({'_id':ObjectId(game_id)})
+        logging.info("Logging from gRPC!")
         if game:
             game_message = games_pb2.Game(id=str(game['_id']), title=game['title'], description=game['description'], type=game['type'], prix=game['prix'])
             self.send_message_to_kafka('getGame', {'gameId': game_id})
@@ -35,12 +36,14 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
 
     def SearchGames(self, request, context):
         games = []
+        logging.info("Logging from gRPC!")
         for game in self.games_collection.find():
             game_message = games_pb2.Game(id=str(game['_id']), title=game['title'], description=game['description'], type=game['type'], prix=game['prix'])
             games.append(game_message)
         return games_pb2.SearchGamesResponse(games=games)
 
     def AddGame(self, request, context):
+        logging.info("Logging from gRPC!")
         new_game = {
             'title': request.title,
             'description': request.description,

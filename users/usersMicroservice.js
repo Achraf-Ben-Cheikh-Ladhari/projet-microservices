@@ -146,6 +146,7 @@ runConsumer().catch(console.error);
 const userService = {
     // gRPC method to get user by ID
     getUser: async (call, callback) => {
+        console.log("Logging from gRPC!");
         try {
             const userId = call.request.user_id;
             const user = await User.findOne({ _id: userId }).exec();
@@ -160,7 +161,9 @@ const userService = {
     },
     // gRPC method to search users
     searchUsers: async (call, callback) => {
+        console.log("Logging from gRPC!");
         try {
+
             const users = await User.find({}).exec();
             callback(null, { users });
         } catch (error) {
@@ -169,6 +172,7 @@ const userService = {
     },
     // gRPC method to add a new user
     addUser: async (call, callback) => {
+        console.log("Logging from gRPC!");
         const { username, nom, prenom, age, password } = call.request;
         //console.log(call.request);
         const newUser = new User({ username, nom, prenom, age, password });
@@ -181,6 +185,7 @@ const userService = {
     },
 
     loginUser: async (call, callback) => {
+        console.log("Logging from gRPC!");
         await producer.connect();
         const { username, password } = call.request;
         try {
@@ -218,7 +223,7 @@ const userService = {
     // gRPC method to delete a user
     deleteUser: async (call, callback) => {
         const { id } = call.request;
-
+        console.log("Logging from gRPC!");
         try {
             // Find the user by id and delete it
             const deletedUser = await User.findByIdAndDelete(id);
@@ -234,6 +239,7 @@ const userService = {
     },
     // gRPC method to update a user
     updateUser: async (call, callback) => {
+        console.log("Logging from gRPC!");
         const { id, nom, prenom, age } = call.request;
         const _id = id
         try {

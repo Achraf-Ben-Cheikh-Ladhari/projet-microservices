@@ -96,6 +96,7 @@ runConsumer().catch(console.error);
 
 const orderService = {
     getOrder: async (call, callback) => {
+        console.log("Logging from gRPC!");
         try {
             const orderId = call.request.order_id;
             //console.log(call.request);
@@ -124,6 +125,7 @@ const orderService = {
 
     },
     searchOrders: async (call, callback) => {
+        console.log("Logging from gRPC!");
         try {
             const orders = await Order.find({}).exec();
 
@@ -146,6 +148,7 @@ const orderService = {
     },
 
     addOrder: async (call, callback) => {
+        console.log("Logging from gRPC!");
         const { idUser, idGames, total } = call.request;
        // console.log(call.request);
         const newOrder = new Order({ idUser, idGames, total });
