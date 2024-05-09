@@ -2,53 +2,46 @@ services:
   gateway-service:
     build:
       context: ./gateway
-
     image: achrafladhari/gateway:${BUILD_ID}
     container_name: gateway
     ports:
       - '3000:3000'
+    depends_on:
+      - orders-service
+      - users-service
+      - games-service
     network_mode: host
 
   orders-service:
     build:
       context: ./orders
-
     image: achrafladhari/orders:${BUILD_ID}
     container_name: orders
     ports:
       - '50053:50053'
-    depends_on:
-      - gateway-service
     network_mode: host
 
   users-service:
     build:
       context: ./users
-
     image: achrafladhari/users:${BUILD_ID}
     container_name: users
     ports:
       - '50051:50051'
-    depends_on:
-      - gateway-service
     network_mode: host
 
   games-service:
     build:
       context: ./games
-
     image: achrafladhari/games:${BUILD_ID}
     container_name: games
     ports:
       - '50052:50052'
-    depends_on:
-      - gateway-service
     network_mode: host
 
   swagger-service:
     build:
       context: ./swagger
-
     image: achrafladhari/swagger:${BUILD_ID}
     container_name: swagger
     ports:
