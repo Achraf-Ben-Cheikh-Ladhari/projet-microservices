@@ -33,6 +33,9 @@ const kafka = new Kafka({
     brokers: ['0.0.0.0:9092']
 });
 const consumer = kafka.consumer({ groupId: 'user-group' });
+
+const producer = kafka.producer();
+
 const runConsumer = async () => {
     try {
         await consumer.connect();
@@ -80,8 +83,6 @@ const runConsumer = async () => {
                 if (action === 'deleteUser') {
                     try {
                         const { userId } = JSON.parse(message.value.toString());
-                        //const userId = userID;
-                        //console.log(userId);
                         const deletedUser = await User.findByIdAndDelete(userId);
                         console.log('User : ', deletedUser);
                     } catch (error) {
@@ -92,8 +93,6 @@ const runConsumer = async () => {
                 if (action === 'updateUser') {
                     try {
                         const { id, nom, prenom, age } = JSON.parse(message.value.toString());
-                        //const userId = userID;
-                        //console.log(userId);
                         const updatedUser = await User.findByIdAndUpdate(id, { nom, prenom, age }, { new: true });
                         console.log('User : ', updatedUser);
                     } catch (error) {
@@ -103,6 +102,7 @@ const runConsumer = async () => {
                 }
                 if (action === 'loginUser') {
                     try {
+                        await producer.connect();
                         const { username, password } = userData;
                         const user = await User.findOne({ username });
                         if (!user) {
@@ -119,7 +119,14 @@ const runConsumer = async () => {
                             username: user.username,
                             fullname: `${user.nom} ${user.prenom}`
                         };
+                        
                         const token = jwt.sign(payload, '123456789');
+                        await producer.send({
+                            topic: 'users_orders_topic',
+                            messages: [{ value: JSON.stringify({ action: 'sendUser', token: token }) }]
+                        });
+                        console.log("send token to orders microservice!");
+                        await producer.disconnect();
                         console.log('User logged in successfully:', user, ' his token is : ', token);
                         // Send token or perform additional actions after successful login
                     } catch (error) {
@@ -174,6 +181,7 @@ const userService = {
     },
 
     loginUser: async (call, callback) => {
+        await producer.connect();
         const { username, password } = call.request;
         try {
             const user = await User.findOne({ username });
@@ -195,6 +203,12 @@ const userService = {
             };
             
             const token = jwt.sign(payload, '123456789');
+            await producer.send({
+                topic: 'users_orders_topic',
+                messages: [{ value: JSON.stringify({ action: 'sendUser', token: token }) }]
+            });
+            console.log("send token to orders microservice!");
+            await producer.disconnect();
             callback(null, { token:token });
         } catch (error) {
            // console.error('Error occurred while logging in:', error);

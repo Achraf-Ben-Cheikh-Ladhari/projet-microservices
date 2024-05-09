@@ -38,11 +38,14 @@ const runConsumer = async () => {
         console.log('Connected to Kafka');
         await consumer.subscribe({ topic: 'order_topic' });
         console.log('Subscribed to order_topic');
-
+        await consumer.subscribe({topic:'users_orders_topic'});
+        console.log('Subscribed to users_orders_topic');
+        await consumer.subscribe({topic:'games_orders_topic'});
+        console.log('Subscribed to games_orders_topic');
         await consumer.run({
             eachMessage: async ({ topic, partition, message }) => {
                 const { action, orderData } = JSON.parse(message.value.toString());
-                console.log("Logging from kafka! ");
+                console.log("Logging from kafka! from topic: ",topic);
                 if (action === 'addOrder') {
                     try {
                         const { idUser, idGames, total } = orderData;
@@ -71,8 +74,14 @@ const runConsumer = async () => {
                         console.error('Error occurred while fetching order:', error);
 
                     }
-
-
+                }
+                if (action==='sendUser'){
+                    const { token } = JSON.parse(message.value.toString());
+                    console.log("user token is ",token);
+                }
+                if (action==='getGame'){
+                    const { gameId } = JSON.parse(message.value.toString());
+                    console.log("game id received from games microservice is ",gameId);
                 }
             },
         });

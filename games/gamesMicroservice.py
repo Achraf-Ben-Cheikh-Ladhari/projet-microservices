@@ -3,7 +3,7 @@ from concurrent import futures
 import games_pb2
 import games_pb2_grpc
 from pymongo import MongoClient
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer,KafkaProducer
 import json
 import logging
 from bson import ObjectId
@@ -17,15 +17,20 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
         self.db = self.client['games']
         self.games_collection = self.db['games']
         logging.info('MongoDB connected')
+        self.producer = KafkaProducer(bootstrap_servers='localhost:9092',
+                                      value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        logging.info('Kafka Producer init !')              
 
     def GetGame(self, request, context):
         game_id = request.game_id
         game = self.games_collection.find_one({'_id':ObjectId(game_id)})
         if game:
             game_message = games_pb2.Game(id=str(game['_id']), title=game['title'], description=game['description'], type=game['type'], prix=game['prix'])
+            self.send_message_to_kafka('getGame', {'gameId': game_id})
             return games_pb2.GetGameResponse(game=game_message)
         else:
             context.set_code(grpc.StatusCode.NOT_FOUND)
+            self.send_message_to_kafka('getGame', {'gameId': 'null'})
             return games_pb2.GetGameResponse()
 
     def SearchGames(self, request, context):
@@ -46,6 +51,11 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
         game_message = games_pb2.Game(id=str(new_game['_id']), title=new_game['title'], description=new_game['description'], type=new_game['type'], prix=new_game['prix'])
         return games_pb2.AddGameResponse(game=game_message)
 
+    def send_message_to_kafka(self, action, data):
+        message = {'action': action, **data}
+        self.producer.send('games_orders_topic', value=message)
+        logging.info(f"Message sent to Kafka: {message}")
+    
     def start_kafka_consumer(self):
         consumer = KafkaConsumer(
             'game_topic',
@@ -86,6 +96,7 @@ class GameServiceServicer(games_pb2_grpc.GameServiceServicer):
                 try:
                     game_id = message.value['gameId']
                     game = self.games_collection.find_one({'_id': ObjectId(game_id)})
+                    self.send_message_to_kafka('getGame', {'gameId': game_id})
                     logging.info('Game: %s', game)
                 except Exception as e:
                     logging.error('Error occurred while fetching game: %s', e)
