@@ -18,7 +18,7 @@ pipeline{
                 sh "echo Version: ${BUILD_ID}"
             }
         }
-       stage("Clean up before creating images") {
+       stage("Clean up before building") {
             steps {
                 script {
                     def previousBuildId = BUILD_ID.toInteger() - 1
@@ -32,12 +32,12 @@ pipeline{
                 }
             }
         }
-        stage ("Building images and containers"){
+        stage ("Building"){
             steps{
                 sh 'docker compose up -d'
             }
         }
-        stage("Send GraphQL Requests") {
+        stage("Send Requests") {
             steps {
                 script {
                     sleep(time: 30, unit: 'SECONDS')
