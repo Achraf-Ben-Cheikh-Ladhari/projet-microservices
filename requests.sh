@@ -5,7 +5,7 @@ echo "GAME MICROSERVICES REQUESTS GRAPHQL!"
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
-    --data '{"query":"query ExampleQuery($title: String!, $description: String!, $type: String!, $prix: String!) {\n  addGame(title: $title, description: $description, type: $type, prix: $prix)\n}","variables":{"title":"nureazrfeazll","description":"fdsqfdsqfdsq","type":"razreazrfdzq","prix":"efaezfgerdzqrza"}}'
+    --data '{"query":"query ExampleQuery($title: String!, $description: String!, $type: String!, $prix: String!) {\n  addGame(title: $title, description: $description, type: $type, prix: $prix)\n}","variables":{"title":"cs go","description":"Valve game","type":"FPS","prix":"120.0"}}'
 
 curl --request POST \
     --header 'content-type: application/json' \
@@ -143,7 +143,7 @@ echo "Get a game by id!"
 echo "\n"
 
 curl -X 'GET' \
-  'http://0.0.0.0:3000/games/663956a34346aca220e74575' \
+  'http://0.0.0.0:3000/games/663956bd4346aca220e74577' \
   -H 'accept: application/json'
 echo "\n"
 
@@ -168,7 +168,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "idUser": "6639579f7aa0e2a833a81a57",
-  "idGames": ["663956a34346aca220e74575"],
+  "idGames": ["663956bd4346aca220e74577, "663956a34346aca220e74575"],
   "total": "30.0"
 }'
 
@@ -177,18 +177,5 @@ echo "\n"
 echo "Get an order by id!"
 echo "\n"
 curl -X 'GET' \
-  'http://0.0.0.0:3000/orders/663b7ab141b4665e9bb98a97' \
+  'http://0.0.0.0:3000/orders/6639570d97db24c1bc83d30c' \
   -H 'accept: application/json'
-
-
-
-
-
-
-
-
-
-
-
-
-
