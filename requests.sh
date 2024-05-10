@@ -92,6 +92,7 @@ last_id_objectid=$(sed 's/"//g' <<< "$last_id")
 last_username=$(jq -r '.[-1].username' <<< "$response")
 echo $response
 password="ladhari"
+
 echo "\n"
 echo "Get User By Id!"
 echo "\n"
