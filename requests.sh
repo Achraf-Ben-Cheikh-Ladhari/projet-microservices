@@ -66,24 +66,6 @@ curl --request POST \
 echo "----------------------------------------------"
 
 echo "USERS MICROSERVICES REQUESTS REST!"
-echo "\n"
-
-echo "All Users!"
-echo "\n"
-
-curl -X 'GET' \
-  'http://0.0.0.0:3000/users' \
-  -H 'accept: application/json'
-echo "\n"
-
-echo "Get User By Id!"
-echo "\n"
-
-curl -X 'GET' \
-  'http://0.0.0.0:3000/users/6639579f7aa0e2a833a81a57' \
-  -H 'accept: application/json'
-echo "\n"
-
 echo "Register a user!"
 echo "\n"
 
@@ -98,6 +80,24 @@ curl -X 'POST' \
   "age": "25",
   "password": "ladhari"
 }'
+
+echo "\n"
+
+echo "All Users!"
+echo "\n"
+
+response=$(curl -X 'GET' 'http://0.0.0.0:3000/users' -H 'accept: application/json')
+last_id=$(echo "$response" | jq '.[-1].id')
+last_username=$(echo "$response" | jq '.[-1].username')
+password="ladhari"
+echo $response
+echo "\n"
+echo "Get User By Id!"
+echo "\n"
+curl -X 'GET' \
+  "http://0.0.0.0:3000/users/$last_id" \
+  -H 'accept: application/json'
+echo "\n"
 echo "\n"
 
 echo "Login a user!"
@@ -108,25 +108,34 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "username": "achraf.ladhari",
-  "password": "ladhari"
+  "username": '$last_username',
+  "password": '$password'
 }'
 echo "\n"
 
+echo "Update a user!"
+echo "\n"
+curl -X 'PUT' \
+  "http://0.0.0.0:3000/users/$last_id" \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "nom": "nour",
+  "prenom": "sbaa",
+  "age": "23"
+}'
+echo "\n"
+
+echo "Delete a user!"
+
+curl -X 'DELETE' \
+  "http://0.0.0.0:3000/users/$last_id" \
+  -H 'accept: application/json'
+
+echo "\n"
 echo "GAMES MICROSERVICES REQUESTS REST!"
 echo "\n"
-
-echo "All Games!"
-echo "\n"
-
-curl -X 'GET' \
-  'http://0.0.0.0:3000/games' \
-  -H 'accept: application/json'
-echo "\n"
-
 echo "Add a new Games!"
-echo "\n"
-
 curl -X 'POST' \
   'http://0.0.0.0:3000/games' \
   -H 'accept: application/json' \
@@ -138,27 +147,23 @@ curl -X 'POST' \
   "prix": "Free"
 }'
 echo "\n"
-
+echo "All Games!"
+echo "\n"
+response=$(curl -X 'GET' 'http://0.0.0.0:3000/games' -H 'accept: application/json')
+last_id=$(echo "$response" | jq '.[-1].id')
+echo $response
+echo "\n"
 echo "Get a game by id!"
 echo "\n"
 
 curl -X 'GET' \
-  'http://0.0.0.0:3000/games/663956bd4346aca220e74577' \
+  "http://0.0.0.0:3000/games/$last_id" \
   -H 'accept: application/json'
 echo "\n"
 
 
 echo "ORDERS MICROSERVICES REQUESTS REST!"
 echo "\n"
-
-echo "All Orders!"
-echo "\n"
-
-curl -X 'GET' \
-  'http://0.0.0.0:3000/orders' \
-  -H 'accept: application/json'
-echo "\n"
-
 echo "Add New Order!"
 echo "\n"
 
@@ -172,10 +177,18 @@ curl -X 'POST' \
   "total": "30.0"
 }'
 
+echo "All Orders!"
+echo "\n"
+
+response=$(curl -X 'GET' 'http://0.0.0.0:3000/orders' -H 'accept: application/json')
+last_id=$(echo "$response" | jq '.[-1].id')
+echo $response
+echo "\n"
+
 echo "\n"
 
 echo "Get an order by id!"
 echo "\n"
 curl -X 'GET' \
-  'http://0.0.0.0:3000/orders/6639570d97db24c1bc83d30c' \
+  "http://0.0.0.0:3000/orders/$last_id" \
   -H 'accept: application/json'
