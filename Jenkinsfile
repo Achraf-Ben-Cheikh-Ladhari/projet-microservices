@@ -10,6 +10,8 @@ pipeline{
                   docker version
                   docker info
                   docker compose version
+                  jq --version
+                  ansible --version
                 '''
             }
         }
