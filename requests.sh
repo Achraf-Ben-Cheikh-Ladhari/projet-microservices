@@ -87,15 +87,16 @@ echo "All Users!"
 echo "\n"
 
 response=$(curl -X 'GET' 'http://0.0.0.0:3000/users' -H 'accept: application/json')
-last_id=$(echo "$response" | jq '.[-1].id')
-last_username=$(echo "$response" | jq '.[-1].username')
-password="ladhari"
+last_id=$(jq -r '.[-1].id' <<< "$response")
+last_id_objectid=$(sed 's/"//g' <<< "$last_id")
+last_username=$(jq -r '.[-1].username' <<< "$response")
 echo $response
+password="ladhari"
 echo "\n"
 echo "Get User By Id!"
 echo "\n"
 curl -X 'GET' \
-  'http://0.0.0.0:3000/users/${last_id}' \
+  "http://0.0.0.0:3000/users/$last_id" \
   -H 'accept: application/json'
 echo "\n"
 echo "Login a user!"
@@ -106,15 +107,15 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "username": '$last_username',
-  "password": '$password'
+  "username": "'"$last_username"'",
+  "password": "'"$password"'"
 }'
 echo "\n"
 
 echo "Update a user!"
 echo "\n"
 curl -X 'PUT' \
-  'http://0.0.0.0:3000/users/${last_id}' \
+  "http://0.0.0.0:3000/users/$last_id" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -127,7 +128,7 @@ echo "\n"
 echo "Delete a user!"
 
 curl -X 'DELETE' \
-  'http://0.0.0.0:3000/users/${last_id}' \
+  "http://0.0.0.0:3000/users/$last_id" \
   -H 'accept: application/json'
 
 echo "\n"
@@ -148,14 +149,15 @@ echo "\n"
 echo "All Games!"
 echo "\n"
 response=$(curl -X 'GET' 'http://0.0.0.0:3000/games' -H 'accept: application/json')
-last_id=$(echo "$response" | jq '.[-1].id')
+last_id=$(jq -r '.[-1].id' <<< "$response")
+last_id_objectid=$(sed 's/"//g' <<< "$last_id")
 echo $response
 echo "\n"
 echo "Get a game by id!"
 echo "\n"
 
 curl -X 'GET' \
-  'http://0.0.0.0:3000/games/${last_id}' \
+  "http://0.0.0.0:3000/games/$last_id" \
   -H 'accept: application/json'
 echo "\n"
 
@@ -179,7 +181,8 @@ echo "All Orders!"
 echo "\n"
 
 response=$(curl -X 'GET' 'http://0.0.0.0:3000/orders' -H 'accept: application/json')
-last_id=$(echo "$response" | jq '.[-1].id')
+last_id=$(jq -r '.[-1].id' <<< "$response")
+last_id_objectid=$(sed 's/"//g' <<< "$last_id")
 echo $response
 echo "\n"
 
@@ -188,5 +191,5 @@ echo "\n"
 echo "Get an order by id!"
 echo "\n"
 curl -X 'GET' \
-  'http://0.0.0.0:3000/orders/${last_id}' \
+  "http://0.0.0.0:3000/orders/$last_id" \
   -H 'accept: application/json'
