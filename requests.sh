@@ -95,11 +95,9 @@ echo "\n"
 echo "Get User By Id!"
 echo "\n"
 curl -X 'GET' \
-  "http://0.0.0.0:3000/users/$last_id" \
+  'http://0.0.0.0:3000/users/${last_id}' \
   -H 'accept: application/json'
 echo "\n"
-echo "\n"
-
 echo "Login a user!"
 echo "\n"
 
@@ -116,7 +114,7 @@ echo "\n"
 echo "Update a user!"
 echo "\n"
 curl -X 'PUT' \
-  "http://0.0.0.0:3000/users/$last_id" \
+  'http://0.0.0.0:3000/users/${last_id}' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -129,7 +127,7 @@ echo "\n"
 echo "Delete a user!"
 
 curl -X 'DELETE' \
-  "http://0.0.0.0:3000/users/$last_id" \
+  'http://0.0.0.0:3000/users/${last_id}' \
   -H 'accept: application/json'
 
 echo "\n"
@@ -157,7 +155,7 @@ echo "Get a game by id!"
 echo "\n"
 
 curl -X 'GET' \
-  "http://0.0.0.0:3000/games/$last_id" \
+  'http://0.0.0.0:3000/games/${last_id}' \
   -H 'accept: application/json'
 echo "\n"
 
@@ -173,7 +171,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "idUser": "6639579f7aa0e2a833a81a57",
-  "idGames": ["663956bd4346aca220e74577, "663956a34346aca220e74575"],
+  "idGames": ["663956bd4346aca220e74577", "663956a34346aca220e74575"],
   "total": "30.0"
 }'
 
@@ -190,5 +188,5 @@ echo "\n"
 echo "Get an order by id!"
 echo "\n"
 curl -X 'GET' \
-  "http://0.0.0.0:3000/orders/$last_id" \
+  'http://0.0.0.0:3000/orders/${last_id}' \
   -H 'accept: application/json'
