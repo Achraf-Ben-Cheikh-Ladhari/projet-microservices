@@ -104,6 +104,7 @@ const runConsumer = async () => {
                     try {
                         await producer.connect();
                         const { username, password } = userData;
+                        //console.log(userData);
                         const user = await User.findOne({ username });
                         if (!user) {
                             console.log('Email or password is invalid!');
