@@ -34,6 +34,7 @@ pipeline{
                 }
             }
         }
+        
         stage ("Building"){
             steps{
                 sh 'docker compose up -d'
