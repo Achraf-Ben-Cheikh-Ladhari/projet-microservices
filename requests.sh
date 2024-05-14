@@ -7,11 +7,17 @@ curl --request POST \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($title: String!, $description: String!, $type: String!, $prix: String!) {\n  addGame(title: $title, description: $description, type: $type, prix: $prix)\n}","variables":{"title":"cs go","description":"Valve game","type":"FPS","prix":"120.0"}}'
 
+echo "Logging From container games after adding a game \n"
+docker logs games
+
+
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery {\n  games\n}","variables":{}}'
 
+echo "Logging From container games after see all games \n"
+docker logs games
 
 curl --request POST \
     --header 'content-type: application/json' \
@@ -19,6 +25,11 @@ curl --request POST \
     --data '{"query":"query ExampleQuery($gameId: String!) {\n  game(id: $gameId)\n}","variables":{"gameId":"663956a34346aca220e74575"}}'
 
 
+echo "Logging From container games get a game by id \n"
+docker logs games
+
+echo "Logging From container orders after getting a game by id \n"
+docker logs orders
 
 echo "USER MICROSERVICES REQUESTS GRAPHQL!"
 
@@ -28,22 +39,36 @@ curl --request POST \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery {\n  users\n}","variables":{}}'
 
+echo "Logging From container users after getting all users \n"
+docker logs users
+
 
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($userId: String!) {\n  user(id: $userId)\n}","variables":{"userId":"6639579f7aa0e2a833a81a57"}}'
 
+echo "Logging From container users after getting a user by id \n"
+docker logs users
 
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($username: String!, $nom: String!, $prenom: String!, $age: String!, $password: String!) {\n  addUser(username: $username, nom: $nom, prenom: $prenom, age: $age, password: $password)\n}","variables":{"nom":"achraf","prenom":"Ladhari","age":"25","password":"ladhari","username":"achraf.ladhari"}}'
 
+echo "Logging From container users after registration \n"
+docker logs users
+
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($username: String!, $password: String!) {\n  loginUser(username: $username, password: $password)\n}","variables":{"password":"ladhari","username":"achraf.ladhari"}}'
+
+echo "Logging From container users after login \n"
+docker logs users
+
+echo "Logging From container orders after login \n"
+docker logs orders
 
 echo "ORDERS MICROSERVICES REQUESTS GRAPHQL!"
 
@@ -52,16 +77,24 @@ curl --request POST \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery {\n  orders\n}","variables":{}}'
 
+echo "Logging From container orders after getting all orders  \n"
+docker logs orders
+
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($orderId: String!) {\n  order(id: $orderId)\n}","variables":{"orderId":"6639570d97db24c1bc83d30c"}}'
+
+echo "Logging From container orders after getting order by id  \n"
+docker logs orders
 
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
     --data '{"query":"query ExampleQuery($idUser: String!, $idGames: [String]!, $total: String!) {\n  addOrder(idUser: $idUser, idGames: $idGames, total: $total)\n}","variables":{"idUser":"6639579f7aa0e2a833a81a57","idGames":["663956a34346aca220e74575"],"total":"30"}}'
 
+echo "Logging From container orders after adding an order  \n"
+docker logs orders
 
 echo "----------------------------------------------"
 
@@ -74,7 +107,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
-  "username": "achraf.ladhari",
+  "username": "nour.sbaa",
   "nom": "achraf",
   "prenom": "ladhari",
   "age": "25",
@@ -111,7 +144,10 @@ curl -X 'POST' \
   "username": "'"$last_username"'",
   "password": "'"$password"'"
 }'
+
 echo "\n"
+echo "Logging From container orders after login a user  \n"
+docker logs orders
 
 echo "Update a user!"
 echo "\n"
@@ -160,6 +196,10 @@ echo "\n"
 curl -X 'GET' \
   "http://0.0.0.0:3000/games/$last_id" \
   -H 'accept: application/json'
+
+echo "Logging From container orders after getting a game by id \n"
+docker logs orders
+
 echo "\n"
 
 

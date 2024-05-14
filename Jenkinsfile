@@ -39,7 +39,7 @@ pipeline{
                 sh 'docker compose up -d'
             }
         }
-        stage("Send Requests") {
+        stage("Testing with bash script") {
             steps {
                 script {
                     sleep(time: 30, unit: 'SECONDS')
@@ -47,7 +47,7 @@ pipeline{
                 sh './requests.sh'
             }
         }
-        stage ("Logging Containers"){
+        /*stage ("Logging Containers"){
             steps{
                 sh 'docker logs gateway'
                 sh 'docker logs swagger'
@@ -55,7 +55,7 @@ pipeline{
                 sh 'docker logs games'
                 sh 'docker logs orders'
             }
-        }
+        }*/
         stage("Deploy") {
             steps {
                 script {
