@@ -82,6 +82,7 @@ curl -X 'POST' \
   "password": "ladhari"
 }'
 
+
 echo "\n"
 
 echo "All Users!"
