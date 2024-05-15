@@ -2,6 +2,7 @@
 
 echo "GAME MICROSERVICES REQUESTS GRAPHQL!"
 
+
 curl --request POST \
     --header 'content-type: application/json' \
     --url http://localhost:3000/ \
