@@ -1,4 +1,3 @@
-const { gql } = require('@apollo/server');
 // Définir le schéma GraphQL
 const typeDefs = `#graphql
 type User {
