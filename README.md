@@ -87,13 +87,14 @@ The CI/CD pipeline in Jenkins includes the following steps:
 
 ## Architecture
 ### REST
-![REST](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/rest.png)
+![REST](https://raw.githubusercontent.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/main/screens/rest.png)
 
 ### GraphQL
-![GraphQL](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/graphql.png)
+![GraphQL](https://raw.githubusercontent.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/main/screens/graphql.png)
 
 ### Kafka
-![GraphQL](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/kafka.png)
+![Kafka](https://raw.githubusercontent.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/main/screens/kafka.png)
+
 
 ## Contributors
 
