@@ -85,6 +85,16 @@ The CI/CD pipeline in Jenkins includes the following steps:
 - **GET /orders**: Retrieve all orders.
 - **POST /orders**: Create a new order.
 
+## Architecture
+### REST
+![REST](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/rest.png)
+
+### GraphQL
+![GraphQL](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/graphql.png)
+
+### Kafka
+![GraphQL](https://github.com/Achraf-Ben-Cheikh-Ladhari/projet-microservices/tree/main/screens/kafka.png)
+
 ## Contributors
 
 - [Achraf BEN CHEIKH LADHARI](https://github.com/Achraf-Ben-Cheikh-Ladhari)
