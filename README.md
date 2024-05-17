@@ -1,4 +1,4 @@
-# Final Project SOA & Microservices
+de# Final Project SOA & Microservices
 # Authors: Achraf BEN CHEIKH LADHARI & Nour Alislem SBAA
 This project is a demonstration of a microservices architecture using Python and Node.js, with Kafka and gRPC for inter-service communication. The project consists of three microservices:
 
@@ -14,7 +14,6 @@ This project is a demonstration of a microservices architecture using Python and
 - **Swagger UI**: Provided for sending REST requests to APIs.
 - **Docker**: Dockerfiles are included to generate containers for each service, API Gateway, and Swagger UI.
 - **docker-compose**: Configuration provided for spinning up all containers with one command.
-- **Ansible**: Automation of local deployment process.
 - **Jenkins**: CI/CD pipeline setup for automated builds and deployment.
 
 ## Project Structure
@@ -25,7 +24,6 @@ This project is a demonstration of a microservices architecture using Python and
 - **API Gateway**: Routes requests to the appropriate service using gRPC.
 - **Swagger UI**: Web interface for sending REST requests to the APIs.
 - **Bash Script**: Included for sending requests with GraphQL and REST.
-- **Ansible Playbook**: Automates the local deployment process.
 - **Jenkins Pipeline**: CI/CD pipeline for building, testing, and deploying the services.
 
 ## Usage
@@ -46,9 +44,6 @@ Use the provided Dockerfiles to generate containers for each service, API Gatewa
 
 A bash script is included for sending all requests with GraphQL and REST.
 
-### Ansible
-
-The local deployment process is automated using an Ansible playbook.
 
 ### Jenkins
 
@@ -101,4 +96,4 @@ The CI/CD pipeline in Jenkins includes the following steps:
 - [Achraf BEN CHEIKH LADHARI](https://github.com/Achraf-Ben-Cheikh-Ladhari)
 - [Nour ALISLEM SBAA](https://github.com/NourSbaa)
 
-### Tools: NodeJS, gRPC, Kafka, MongoDB, Python, Apollo, Swagger, Docker, Ansible, Jenkins
+### Tools: NodeJS, gRPC, Kafka, MongoDB, Python, Apollo, Swagger, Docker, Jenkins
