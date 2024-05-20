@@ -1,0 +1,27 @@
+---
+- name : "Build Automated App"
+  hosts : localhost
+  tasks:
+  - name : Stop Containers and remove them
+    command : docker compose down -v
+    ignore_errors: yes
+  
+  - name : Remove gateway image
+    command : docker rmi achrafladhari/gateway --force
+    ignore_errors: yes
+    
+  - name : Remove swagger image
+    command : docker rmi achrafladhari/swagger --force
+    ignore_errors: yes
+  
+  - name : Remove orders service image
+    command : docker rmi achrafladhari/orders --force
+    ignore_errors: yes
+
+  - name : Remove games service image
+    command : docker rmi achrafladhari/games --force
+    ignore_errors: yes
+
+  - name : Remove users service image
+    command : docker rmi achrafladhari/users --force
+    ignore_errors: yes
