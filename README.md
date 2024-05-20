@@ -1,4 +1,4 @@
-de# Final Project SOA & Microservices
+# Final Project SOA & Microservices
 # Authors: Achraf BEN CHEIKH LADHARI & Nour Alislem SBAA
 This project is a demonstration of a microservices architecture using Python and Node.js, with Kafka and gRPC for inter-service communication. The project consists of three microservices:
 
